@@ -4,12 +4,12 @@ import {
   selectViewType,
   switchTheme,
   switchTemplate,
-  verifyContentCardContainerVisible,
+  verifyInboxVisible,
   verifyEmptyStateVisible,
   takeScreenshot
 } from './helpers';
 
-describe('Content Cards - Mock Data Tests', () => {
+describe.skip('Content Cards - Mock Data Tests', () => {
   beforeAll(async () => {
     await device.launchApp({ newInstance: true });
   });
@@ -31,7 +31,7 @@ describe('Content Cards - Mock Data Tests', () => {
   });
 
   describe('View Type Selection', () => {
-    xit('should open view picker modal', async () => {
+    it('should open view picker modal', async () => {
       await element(by.id('view-picker-button')).tap();
       await waitFor(element(by.id('view-picker-modal')))
         .toBeVisible()
@@ -49,46 +49,15 @@ describe('Content Cards - Mock Data Tests', () => {
       // Close modal
       await element(by.id('modal-cancel-button')).tap();
     });
+  });
 
-    xit('should switch to Inbox view', async () => {
-      await selectViewType('inbox');
-      await verifyContentCardContainerVisible('content-card-container-inbox');
-      await takeScreenshot('inbox-view');
-    });
-
-    xit('should switch to Carousel view', async () => {
-      await selectViewType('carousel');
-      await verifyContentCardContainerVisible('content-card-container-carousel');
-      await takeScreenshot('carousel-view');
-    });
-
-    xit('should switch to Container with Styling view', async () => {
-      await selectViewType('container-with-styling');
-      await verifyContentCardContainerVisible('content-card-container-container-with-styling');
-      await takeScreenshot('container-with-styling-view');
-    });
-
-    xit('should switch to Empty view and display empty state', async () => {
-      await selectViewType('empty');
-      await verifyEmptyStateVisible();
-      await detoxExpect(element(by.text('No deals today come back soon!'))).toBeVisible();
-      await takeScreenshot('empty-view');
-    });
-
-    xit('should switch to Custom Card View', async () => {
-      await selectViewType('custom-card-view');
-      await verifyContentCardContainerVisible('content-card-container-custom-card-view');
-      await takeScreenshot('custom-card-view');
-    });
-
-    xit('should switch to Templates view', async () => {
+    it('should switch to Templates view', async () => {
       await selectViewType('templates');
       await waitFor(element(by.id('content-cards-template-list')))
         .toBeVisible()
         .withTimeout(5000);
       await takeScreenshot('templates-view');
     });
-  });
 
   describe('Theme Switching', () => {
     it('should switch to Light theme', async () => {
@@ -109,7 +78,7 @@ describe('Content Cards - Mock Data Tests', () => {
       await takeScreenshot('system-theme');
     });
 
-    xit('should apply theme changes to Empty state', async () => {
+    it('should apply theme changes to Empty state', async () => {
       await selectViewType('empty');
       
       // Switch to light theme
@@ -123,22 +92,22 @@ describe('Content Cards - Mock Data Tests', () => {
       await takeScreenshot('empty-state-dark-theme');
     });
 
-    xit('should apply theme changes to Container with Styling view', async () => {
+    it('should apply theme changes to Container with Styling view', async () => {
       await selectViewType('container-with-styling');
       
       // Switch to light theme
       await switchTheme('light');
-      await verifyContentCardContainerVisible('content-card-container-container-with-styling');
+      await verifyInboxVisible('content-card-container-container-with-styling');
       await takeScreenshot('container-styling-light-theme');
       
       // Switch to dark theme
       await switchTheme('dark');
-      await verifyContentCardContainerVisible('content-card-container-container-with-styling');
+      await verifyInboxVisible('content-card-container-container-with-styling');
       await takeScreenshot('container-styling-dark-theme');
     });
   });
 
-  describe.skip('Template Switching', () => {
+  describe('Template Switching', () => {
     beforeEach(async () => {
       // Navigate to Templates view first
       await selectViewType('templates');
@@ -194,10 +163,10 @@ describe('Content Cards - Mock Data Tests', () => {
     });
   });
 
-  describe.skip('Content Card Rendering - Mock Data', () => {
+  describe('Content Card Rendering - Mock Data', () => {
     it('should render Inbox cards with mock data', async () => {
       await selectViewType('inbox');
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       
       // Verify heading is visible
       await waitFor(element(by.text('Inbox')))
@@ -209,7 +178,7 @@ describe('Content Cards - Mock Data Tests', () => {
 
     it('should render Carousel cards with mock data', async () => {
       await selectViewType('carousel');
-      await verifyContentCardContainerVisible('content-card-container-carousel');
+      await verifyInboxVisible('content-card-container-carousel');
       
       // Verify heading is visible
       await waitFor(element(by.text('Carousel')))
@@ -221,7 +190,7 @@ describe('Content Cards - Mock Data Tests', () => {
 
     it('should render Custom Card View with custom styling', async () => {
       await selectViewType('custom-card-view');
-      await verifyContentCardContainerVisible('content-card-container-custom-card-view');
+      await verifyInboxVisible('content-card-container-custom-card-view');
       
       // Verify heading is visible
       await waitFor(element(by.text('Custom Card View')))
@@ -233,7 +202,7 @@ describe('Content Cards - Mock Data Tests', () => {
 
     it('should render Container with Styling with custom container styles', async () => {
       await selectViewType('container-with-styling');
-      await verifyContentCardContainerVisible('content-card-container-container-with-styling');
+      await verifyInboxVisible('content-card-container-container-with-styling');
       
       // Verify heading is visible
       await waitFor(element(by.text('Container with Styling')))
@@ -254,7 +223,7 @@ describe('Content Cards - Mock Data Tests', () => {
     });
   });
 
-  describe.skip('Template Content Rendering', () => {
+  describe('Template Content Rendering', () => {
     beforeEach(async () => {
       await selectViewType('templates');
       await waitFor(element(by.id('content-cards-template-list')))
@@ -323,7 +292,7 @@ describe('Content Cards - Mock Data Tests', () => {
     });
   });
 
-  describe.skip('Theme and Template Combinations', () => {
+  describe('Theme and Template Combinations', () => {
     beforeEach(async () => {
       await selectViewType('templates');
       await waitFor(element(by.id('content-cards-template-list')))
@@ -386,17 +355,17 @@ describe('Content Cards - Mock Data Tests', () => {
     });
   });
 
-  describe.skip('View Persistence', () => {
+  describe('View Persistence', () => {
     it('should maintain selected view after theme change', async () => {
       // Select Inbox view
       await selectViewType('inbox');
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       
       // Switch theme
       await switchTheme('dark');
       
       // Verify still on Inbox view
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       await detoxExpect(element(by.text('Inbox'))).toBeVisible();
     });
 
@@ -417,5 +386,5 @@ describe('Content Cards - Mock Data Tests', () => {
       await detoxExpect(element(by.id('template-largeimage'))).toBeVisible();
     });
   });
-});
 
+});

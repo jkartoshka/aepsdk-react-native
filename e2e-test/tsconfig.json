@@ -1,0 +1,24 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "../apps/AEPSampleAppNewArchEnabled/node_modules/@types",
+      "../node_modules/@types"
+    ],
+    "baseUrl": "..",
+    "paths": {
+      "detox": ["apps/AEPSampleAppNewArchEnabled/node_modules/detox"]
+    }
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+

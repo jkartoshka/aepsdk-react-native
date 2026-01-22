@@ -6375,6 +6375,7 @@ __metadata:
     "@types/react": "npm:^18.0.5"
     babel-jest: "npm:^29.7.0"
     babel-plugin-module-resolver: "npm:^4.1.0"
+    detox: "npm:^20.26.2"
     jest: "npm:^30.2.0"
     jest-environment-jsdom: "npm:^30.2.0"
     lerna: "npm:^8.2.2"

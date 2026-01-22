@@ -1,9 +1,9 @@
-import { device, element, by, expect as detoxExpect, waitFor } from 'detox';
+import { device, element, by, expect as detoxExpect } from 'detox';
 import {
   navigateToContentCards,
   selectViewType,
   trackAction,
-  verifyContentCardContainerVisible,
+  verifyInboxVisible,
   takeScreenshot
 } from './helpers';
 
@@ -30,7 +30,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await detoxExpect(element(by.text('Remote'))).toBeVisible();
       
       // Verify content card container is present
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('remote-view-loaded');
     });
@@ -41,7 +41,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await selectViewType('remote');
       
       // The container should be visible (may show loading or content)
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('remote-loading-state');
     });
@@ -51,14 +51,14 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 5000));
       
       // Verify container is still visible (with content or empty state)
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('remote-content-loaded');
     });
 
     it('should handle error states gracefully', async () => {
       // The app should not crash even if API fails
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       // Wait for potential error handling
       await new Promise(resolve => setTimeout(resolve, 3000));
@@ -96,7 +96,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Verify content card container is still visible
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('after-track-action');
     });
@@ -120,7 +120,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Verify content card container is still visible
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('after-multiple-track-actions');
     });
@@ -161,7 +161,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await element(by.id('track-action-button')).tap();
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       await takeScreenshot('track-special-chars');
     });
 
@@ -171,7 +171,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await element(by.id('track-action-button')).tap();
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       await takeScreenshot('track-long-text');
     });
   });
@@ -215,7 +215,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Verify container is still visible with potentially updated content
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('content-refreshed');
     });
@@ -230,7 +230,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Should still be on Inbox view
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       await detoxExpect(element(by.text('Inbox'))).toBeVisible();
       
       await takeScreenshot('state-maintained');
@@ -253,7 +253,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 5000));
       
       // Verify app is still stable
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('after-rapid-actions');
     });
@@ -272,7 +272,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Should be on Inbox view
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       
       await takeScreenshot('action-during-switch');
     });
@@ -284,7 +284,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       
       // The app uses different surfaces for iOS and Android
       // This test verifies that the appropriate surface is loaded
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       // Wait for content to load
       await new Promise(resolve => setTimeout(resolve, 5000));
@@ -295,15 +295,15 @@ describe.skip('Content Cards - API Integration Tests', () => {
     it('should handle surface switching between views', async () => {
       // Remote view uses platform-specific surface
       await selectViewType('remote');
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       // Mock views use mock surfaces
       await selectViewType('inbox');
-      await verifyContentCardContainerVisible('content-card-container-inbox');
+      await verifyInboxVisible('content-card-container-inbox');
       
       // Switch back to remote
       await selectViewType('remote');
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('surface-switching');
     });
@@ -314,13 +314,13 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await selectViewType('remote');
       
       // Even if network fails, app should not crash
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       // Track action that might fail
       await trackAction('network_error_test');
       
       // App should still be functional
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('network-error-handling');
     });
@@ -334,7 +334,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
       
       // Container should still be visible (possibly showing empty state)
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('empty-api-response');
     });
@@ -351,7 +351,7 @@ describe.skip('Content Cards - API Integration Tests', () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // App should be functional
-      await verifyContentCardContainerVisible('content-card-container-remote');
+      await verifyInboxVisible('inbox-remote');
       
       await takeScreenshot('recovered-from-failure');
     });

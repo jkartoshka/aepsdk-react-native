@@ -1,9 +1,11 @@
+const path = require('path');
+
 /** @type {Detox.DetoxConfig} */
 module.exports = {
   testRunner: {
     args: {
       '$0': 'jest',
-      config: 'e2e/jest.config.js'
+      config: path.resolve(__dirname, '../../e2e-test/jest.config.js')
     },
     jest: {
       setupTimeout: 120000
@@ -41,7 +43,7 @@ module.exports = {
     simulator: {
       type: 'ios.simulator',
       device: {
-        type: 'iPhone 15 Pro'
+        type: 'iPhone 16e'
       }
     },
     attached: {

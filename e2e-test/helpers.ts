@@ -1,4 +1,4 @@
-import { device, element, by, expect as detoxExpect, waitFor } from 'detox';
+import { device, element, by, waitFor } from 'detox';
 
 /**
  * Helper function to navigate to ContentCardsView
@@ -80,10 +80,10 @@ export async function trackAction(actionName: string) {
 }
 
 /**
- * Helper function to verify content card container is visible
+ * Helper function to verify content card inbox is visible
  */
-export async function verifyContentCardContainerVisible(containerTestId?: string, timeout: number = 10000) {
-  const testId = containerTestId || 'content-cards-container';
+export async function verifyInboxVisible(inboxTestId?: string, timeout: number = 10000) {
+  const testId = inboxTestId || 'content-cards-inbox';
   await waitFor(element(by.id(testId)))
     .toExist()
     .withTimeout(timeout);

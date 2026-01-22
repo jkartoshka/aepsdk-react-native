@@ -266,7 +266,7 @@ const InboxView = () => {
   const items = selectedView === 'Templates' ? ITEMS_BY_VIEW[selectedTemplate] : undefined;
 
   useEffect(() => {
-   MobileCore.trackAction("small_image1");
+    MobileCore.trackAction("small_image1");
   }, []);
 
   if (selectedView === 'Remote') {
@@ -280,12 +280,14 @@ const InboxView = () => {
           selectedTemplate={selectedTemplate}
           onTemplateChange={setSelectedTemplate}
         />
-        <Inbox
-          surface={surface}
-          settings={settings}
-          isLoading={isLoadingInbox}
-          error={error}
-        />
+        <View testID="inbox-remote">
+          <Inbox
+            surface={surface}
+            settings={settings}
+            isLoading={isLoadingInbox}
+            error={error}
+          />
+        </View>
       </>
     );
   }
